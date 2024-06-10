@@ -1,0 +1,32 @@
+{% load static %}
+
+<!-- main base html page to be used by other templates for web app-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'sticky_notes/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<!-- placeholders for dynamic content to be populated. Load bootstrap and css for styling-->
+    <title>{% block title %}Sticky Notes App {% endblock %}</title>
+    {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+    <header class="headr">{% block header %}<h1>Sticky Notes App{% endblock %}</h1></header>
+
+    <main> 
+            {% block content %}{% endblock %}
+    </main>
+    
+</body>
+</html>

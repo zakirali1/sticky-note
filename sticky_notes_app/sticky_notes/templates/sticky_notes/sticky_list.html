@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+<!-- extending the base.html to be reused for structure and format-->
+
+{% block title %} Sticky List - {{ sticky_note_title }} {% endblock %}
+
+{% block content %}
+
+<div class="class-creation">
+    <a href="{% url 'manage_notes' %}">Add Notes</a><i class="fa-sharp fa-solid fa-pencil"></i>
+    
+</div>
+
+<div class="title-class">
+   
+</div>
+
+<div class="container wrapper">
+    <div class="row">
+
+        <!-- loop through notes and generate a card for each-->
+        {% for note in notes %}
+    <div class="card md-4 mb-4 cards" style="width: 24rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ note.title }}</h5>
+            <p class="card-text">{{ note.things_to_do }}</p>
+
+            <!-- custom attribute to be used as primary key for later manipulation of CRUD to notes, specifically updating a card-->
+            <button class="btn btn-primary delete-note" data-note-id="{{ note.id }}">Delete</button>
+            <button class="btn btn-primary">
+
+                <!-- link to another form page for updates-->
+                <a href="{% url 'update_note' note.id %}" class="button-link" style="color: white; text-decoration: none;">Update</a>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    
+</div>
+
+
+<!-- links to delete button. Ajax function which deletes the selected sticky note-->
+<!-- importing jquery-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    // when document is loaded  selects the class with 'delete-note' attachs an event listener 
+$(document).ready(function() {
+    $('.delete-note').click(function(e) {
+
+        // prevents reload
+        e.preventDefault();
+        let noteId = $(this).data('note-id');
+
+        // make async call to delete_note url. view will accept the object below and validate 
+        $.ajax({
+            type: 'POST',
+            url: '{% url "delete_note" %}',
+            data: {
+                'note_id': noteId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+
+            // response on success and failure of deletion
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert('Error deleting note');
+                }
+            }
+        });
+    });
+});
+
+
+</script>
+{% endblock %}
+

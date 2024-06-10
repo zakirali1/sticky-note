@@ -1,0 +1,37 @@
+<!--  template for sticky form -->
+
+<!-- bring in the template from base to be reused-->
+{% extends 'base.html' %}
+
+
+<!-- fill in the first block -->
+{% block title %} Update Notes {% endblock %}
+
+
+<!-- content for content section. Creating a card which submits to the manage_notes url. -->
+{% block content %}
+<div class="container-fluid form-wrapper">
+    <form class="form-card" method="post" action="{% url 'manage_notes' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="noteTitle" class="form-label">Note title</label>
+            <input type="text" class="form-control" id="noteTitle" name="title" value="{{ note.title }}">
+        </div>
+        <div class="mb-3">
+            <label for="addNotes" class="form-label">Add Notes</label>
+            <input type="text" class="form-control" id="addNotes" name="things_to_do" value="{{ note.things_to_do }}">
+        </div>
+        <div class="button-pos">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- after go back to main page -->
+<div class="go-back">
+    <a href="{% url 'notes_all' %}"><i class="fa-solid fa-backward a-text">Go back</i></a>
+</div>
+{% endblock %}
+
+

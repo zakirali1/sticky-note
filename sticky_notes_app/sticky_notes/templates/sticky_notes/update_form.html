@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+<!-- extending base template and creating a card for the update function to work on selected sticky note-->
+
+{% block title %} Update Notes {% endblock %}
+
+{% block content %}
+<div class="container-fluid form-wrapper">
+
+    <!-- submit to update_note view and add primary key to ensure the correct sticky note is deleted-->
+    <form class="form-card" method="post" action="{% url 'update_note' note.pk %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="noteTitle" class="form-label">Note title</label>
+            <input type="text" class="form-control" id="noteTitle" name="title" value="{{ form.title.value }}">
+        </div>
+        <div class="mb-3">
+            <label for="addNotes" class="form-label">Add Notes</label>
+            <input type="text" class="form-control" id="addNotes" name="things_to_do" value="{{ form.things_to_do.value }}">
+        </div>
+        <div class="button-pos">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+
+<div class="go-back">
+    <a href="{% url 'notes_all' %}"><i class="fa-solid fa-backward a-text">Go back</i></a>
+</div>
+{% endblock %}
