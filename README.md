@@ -1,4 +1,4 @@
-#Django App - Sticky Notes
+# Django App - Sticky Notes
 
 ## Description
 
