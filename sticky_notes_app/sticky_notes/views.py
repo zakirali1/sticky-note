@@ -25,22 +25,24 @@ def notes_all(request):
 def manage_notes(request):
     if request.method == 'POST':
 
-        # grab the parameters from the post request and store them to variable form
+# grab the parameters from the post request and store them to variable form
         form = StickyForm(request.POST)
 
-        # if truthy then save the values to the db / form
+# if truthy then save the values to the db / form
         if form.is_valid():
             notes = form.save(commit=False)
             notes.save()
             return redirect('notes_all')
+#else create a new instance of 
+# stickyForm and redirect to same page to populate
     else:
-
-        # else create a new instance of stickyForm and redirect to same page to populate 
         form = StickyForm()
     return render(request, 'sticky_notes/sticky_form.html', {'form': form})
 
 
-# if the method is POST, grab the note-id and pass as parameter for id to get_object, if it exists, delete and return success messages
+"""if the method is POST, grab the note-id 
+and pass as parameter for id to get_object, if it exists, 
+delete and return success messages"""
 
 def delete_note(request):
     if request.method == 'POST':
@@ -52,8 +54,8 @@ def delete_note(request):
         return JsonResponse({'success': False})
     
 
-# update function using primary key to select and update the correct sticky note
-
+"""update function using primary key
+ to select and update the correct sticky note"""
 def update_note(request, pk):
 
     # pass in instance along with primary key to select correct sticky note to be updated
